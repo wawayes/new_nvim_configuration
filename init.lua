@@ -179,6 +179,30 @@ require("lazy").setup({
 			current_line_blame = true,
 		},
 	},
+	{
+		"petertriho/nvim-scrollbar",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		config = function()
+			require("scrollbar").setup({
+				handlers = {
+					cursor = true,
+					diagnostic = false,
+					gitsigns = false, -- Requires gitsigns
+					handle = true,
+					search = false, -- Requires hlslens
+					ale = false, -- Requires ALE
+				},
+				set_highlights = true,
+			})
+		end,
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+			require("scrollbar.handlers.gitsigns").setup()
+		end,
+	},
 
 	-- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 	--
@@ -766,6 +790,10 @@ require("lazy").setup({
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
+
+			-- autohighlighting word under cursor
+			-- 暂时未生效
+			require("mini.cursorword").setup()
 
 			-- Simple and easy statusline.
 			--  You could remove this setup call if you don't like it,
